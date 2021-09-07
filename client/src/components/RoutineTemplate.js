@@ -1,0 +1,53 @@
+const template = [
+    {
+        id:1,
+        day:"Lunes",
+        type1:"Cardio",
+        type2:"Fuerza",
+        type3:"Flexibilidad"
+    },
+    {
+        id:2,
+        day:"Martes",
+        type1:"Cardio",
+        type2:"Fuerza",
+        type3:"Flexibilidad"
+    },
+    {
+        id:3,
+        day:"Miercoles",
+        type1:"Cardio",
+        type2:"Fuerza",
+        type3:"Flexibilidad"
+    },
+    {
+        id:4,
+        day:"Jueves",
+        type1:"Cardio",
+        type2:"Fuerza",
+        type3:"Flexibilidad"
+    },
+    {
+        id:5,
+        day:"Viernes",
+        type1:"Cardio",
+        type2:"Fuerza",
+        type3:"Flexibilidad"
+    },
+    {
+        id:6,
+        day:"Sabado",
+        type1:"Cardio",
+        type2:"Fuerza",
+        type3:"Flexibilidad"
+    },
+    {
+        id:7,
+        day:"Domingo",
+        type1:"Cardio",
+        type2:"Fuerza",
+        type3:"Flexibilidad"
+    }
+]
+
+export default template;
