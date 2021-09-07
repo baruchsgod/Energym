@@ -31,10 +31,16 @@ app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(express.json());
+app.set("trust proxy",1);
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie:{
+        sameSite:"none",
+        secure:true,
+        maxAge: 1000*60*60*24*7 //One week
+    }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
