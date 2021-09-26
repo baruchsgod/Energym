@@ -44,7 +44,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({ origin: "https://inspiring-jang-25c945.netlify.app", credentials: true })); //testing CORS
+app.use(cors({ origin: "https://energym-project.herokuapp.com", credentials: true })); //testing CORS
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
     done(null, user.id);
@@ -58,7 +58,7 @@ passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     // callbackURL: "http://localhost:3000/auth/google/home"
-    callbackURL:"https://inspiring-jang-25c945.netlify.app/auth/google/home"
+    callbackURL:"https://energym-project.herokuapp.com//auth/google/home"
     // userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
 },
     function (accessToken, refreshToken, profile, cb) {
