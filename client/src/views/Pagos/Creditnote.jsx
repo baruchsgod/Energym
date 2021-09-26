@@ -23,15 +23,15 @@ export default function Membership(props) {
         setMsg("");
         setTable([]);
         const user = userRef.current.value;
-        Axios.get("/userDetails", {
+        Axios.get("https://energymproject.herokuapp.com/userDetails", {
             params: { idUser: user }
         })
             .then(async (res) => {
                 if (res.data.length > 0) {
-                    Axios.get("/user")
+                    Axios.get("https://energymproject.herokuapp.com/user")
                     .then(async (resp) => {
                         if(resp.data){
-                            Axios.get("/payment/reject", {
+                            Axios.get("https://energymproject.herokuapp.com/payment/reject", {
                                 params:{userId:resp.data.email}
                             })
                             .then(async (response) => {

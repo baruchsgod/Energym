@@ -35,12 +35,12 @@ app.set("trust proxy",1);
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false,
-    cookie:{
-        sameSite:"none",
-        secure:true,
-        maxAge: 1000*60*60*24*7 //One week
-    }
+    saveUninitialized: false
+    // cookie:{
+    //     sameSite:"none",
+    //     secure:true,
+    //     maxAge: 1000*60*60*24*7 //One week
+    // }
 }));
 app.use(passport.initialize());
 app.use(passport.session());

@@ -44,7 +44,7 @@ function Register() {
         };
         if (passRef.current.value === confirmPassRef.current.value) {
             if (enteredAge >= 12) {
-                Axios.post("/register", cliente)
+                Axios.post("https://energymproject.herokuapp.com/register", cliente)
                     .then(response => {
                         if (response.data.message === "success") {
                             swal("Cuenta creada correctamente, puedes iniciar sesión!", {

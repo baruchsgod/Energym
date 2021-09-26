@@ -14,7 +14,7 @@ const CreateEvents = () => {
         e.preventDefault();
         if (calificacion >= 1 && calificacion <= 5) {
             const datoRetroalimentacion = { descripcion, calificacion };
-            Axios.post("/crearRetroalimentacion", datoRetroalimentacion)
+            Axios.post("https://energymproject.herokuapp.com/crearRetroalimentacion", datoRetroalimentacion)
                 .then(response => {
                     if (response.data.icon === "success") history.push("/ListUserFeedback");
                     return swal(response.data.title, response.data.message, response.data.icon);
