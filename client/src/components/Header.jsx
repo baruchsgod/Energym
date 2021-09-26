@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Button } from "react-bootstrap";
 import Axios from "axios";
+import { useHistory } from "react-router-dom";
 import HeaderCliente from "./HeaderCliente";
 import HeaderAdmin from "./HeaderAdmin";
 import HeaderEmpleado from "./HeaderEmpleado";
 library.add(faCoffee, faSignOutAlt);
 export default function Header() {
+    const history = useHistory();
     const logOut = () => {
         Axios({
             method: "GET",
@@ -17,7 +19,7 @@ export default function Header() {
         }).then((res) => {
             if (res.data) {
                 localStorage.clear();
-                window.location = "/Login";
+                history.push("/Login");
             }
         })
     };

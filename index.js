@@ -396,7 +396,7 @@ app.get("/user", (req, res) => { res.send(req.user); });
 app.get("/isauth", (req, res) => { req.isAuthenticated() ? res.status(200).send(true) : res.status(200).send(false); })
 app.get("/logout", function (req, res) {
     req.logOut();
-    res.redirect("/");
+    res.send({information:"test"});
 });
 //Testing the session
 //Port Number to host app

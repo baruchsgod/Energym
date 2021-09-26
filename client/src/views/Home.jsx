@@ -25,7 +25,7 @@ export default function Home() {
         }).then((res) => {
             if (res.data === "") {
                 localStorage.clear();
-                history.push("/Login");
+                // history.push("/Login");
             }
         });
     }, [history]);

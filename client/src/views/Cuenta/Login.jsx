@@ -25,7 +25,7 @@ function Login() {
       username: emailRef.current.value,
       password: passwordRef.current.value
     };
-    //console.log("https://energymproject.herokuapp.com/login");
+    
     Axios.post("https://energymproject.herokuapp.com/login", login)
       .then(response => {
         if (response.data.message != null) {
@@ -64,7 +64,7 @@ function Login() {
         }
       })
       .then(error => {
-        //console.log(error);//recoger el error
+        
       });
   }
 
