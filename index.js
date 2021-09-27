@@ -31,12 +31,12 @@ app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(express.json());
-app.set("trust proxy",1);
+app.set("trust proxy", 1);
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false
-   
+
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -54,7 +54,7 @@ passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     // callbackURL: "http://localhost:3000/auth/google/home"
-    callbackURL:"https://energym-project.herokuapp.com//auth/google/home"
+    callbackURL: "https://energym-project.herokuapp.com//auth/google/home"
     // userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
 },
     function (accessToken, refreshToken, profile, cb) {
@@ -277,7 +277,6 @@ app.use("/listUserEvents", userSettings.getUserEvents);
 app.use("/listUserDiets", userSettings.getUserDiets);
 app.use("/listUserRoutines", userSettings.getUserRoutines);
 app.use("/listUserDocuments", userSettings.getUserDocuments);
-app.use("/listUserFeedback", userSettings.getUserFeedback);
 app.use("/listUserMetrics", userSettings.getUserMetrics);
 //-------Events
 app.use("/createEvent", events.createEvent);
@@ -288,8 +287,10 @@ app.use("/getClientesEvento", events.getClientsEvents);
 app.use("/reservaEventoPost", events.reserveEvent);
 app.use("/borrarReserva", events.borrarReserva);
 //-------Retroalimentacion
-app.use("/crearRetroalimentacion", retroalimentacion.crearRetroalimentacion);
-app.use("/listRetroalimentacion", retroalimentacion.getRetroalimentacion);
+app.use("/feedback", retroalimentacion);
+app.use("/feedback/getRetroalimentacionAdmin", retroalimentacion);
+app.use("/feedback/getRetroalimentacionCliente", retroalimentacion);
+app.use("/feedback/crearRetroalimentacion", retroalimentacion);
 //-------Metricas
 app.use("/crearMetrica", metricas.createMetrica);
 app.use("/getUserMetricsEmpleado", metricas.getUserMetrics);
@@ -396,7 +397,7 @@ app.get("/user", (req, res) => { res.send(req.user); });
 app.get("/isauth", (req, res) => { req.isAuthenticated() ? res.status(200).send(true) : res.status(200).send(false); })
 app.get("/logout", function (req, res) {
     req.logOut();
-    res.send({information:"test"});
+    res.send({ information: "test" });
 });
 //Testing the session
 //Port Number to host app
