@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/public"));
 const router = express.Router();
 
-router.get("/getRetroalimentacionAdmin", async (req, res) => {
+router.get("/getRetroalimentacionAdmin", async (req, res, next) => {
     Retroalimentacion.find((err, data) => {
         if (err) {
             return res.status(200).send({ title: 'Error!', message: 'Hubo un problema al cargar los datos: ' + err, icon: 'error' });
@@ -18,7 +18,7 @@ router.get("/getRetroalimentacionAdmin", async (req, res) => {
     });
 });
 
-router.get("/getRetroalimentacionCliente", async (req, res) => {
+router.get("/getRetroalimentacionCliente", async (req, res, next) => {
     var userId = req.user._id;
     Customer.findOne({ _id: userId }, (err, user) => {
         if (err) {
@@ -29,7 +29,7 @@ router.get("/getRetroalimentacionCliente", async (req, res) => {
     });
 });
 
-router.post("/crearRetroalimentacion", async (req, res) => {
+router.post("/crearRetroalimentacion", async (req, res, next) => {
     //Esta funcion agrega un Mensaje a la coleccion
     var retroalimentacion = new Retroalimentacion({
         "Cliente.Id": req.user._id,
