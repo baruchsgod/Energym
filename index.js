@@ -41,7 +41,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({ origin: "https://energym-project.herokuapp.com", credentials: true })); //testing CORS
-/*
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -49,7 +48,6 @@ app.use((req, res, next) => {
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
-*/
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
     done(null, user.id);
