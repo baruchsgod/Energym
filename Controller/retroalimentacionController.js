@@ -18,7 +18,7 @@ router.get("/getRetroalimentacionAdmin", async (req, res, next) => {
     });
 });
 
-router.get("/getRetroalimentacionCliente", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     var userId = req.user._id;
     Customer.findOne({ _id: userId }, (err, user) => {
         if (err) {
@@ -30,8 +30,6 @@ router.get("/getRetroalimentacionCliente", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-    return res.status(200).send({ title: 'Exito!', message: 'El Mensaje fue creado correctamente!', icon: 'success' });
-    /*
     //Esta funcion agrega un Mensaje a la coleccion
     var retroalimentacion = new Retroalimentacion({
         "Cliente.Id": req.user._id,
@@ -63,7 +61,6 @@ router.post("/", async (req, res, next) => {
             return res.status(200).send({ title: 'Exito!', message: 'El Mensaje fue creado correctamente!', icon: 'success' });
         });
     });
-    */
 })
 
 module.exports = router;
