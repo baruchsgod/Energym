@@ -29,7 +29,9 @@ router.get("/getRetroalimentacionCliente", async (req, res, next) => {
     });
 });
 
-router.post("/crearRetroalimentacion", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
+    return res.status(200).send({ title: 'Exito!', message: 'El Mensaje fue creado correctamente!', icon: 'success' });
+    /*
     //Esta funcion agrega un Mensaje a la coleccion
     var retroalimentacion = new Retroalimentacion({
         "Cliente.Id": req.user._id,
@@ -37,9 +39,6 @@ router.post("/crearRetroalimentacion", async (req, res, next) => {
         "Descripcion": req.body.descripcion,
         "Calificacion": req.body.calificacion
     });
-    var mensaje = req.user._id + " - " + req.user._id + " - " + req.body.descripcion + " - " + req.body.calificacion;
-    return res.status(200).send({ title: 'Error!', message: mensaje, icon: 'error' });
-    /*
     retroalimentacion.save((err, retroalimentacionStored) => {
         if (err) {
             return res.status(200).send({ title: 'Error!', message: 'Hubo un problema al guardar el mensaje ' + err, icon: 'error' });

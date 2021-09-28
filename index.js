@@ -299,7 +299,6 @@ app.use("/borrarReserva", events.borrarReserva);
 app.use("/feedback", retroalimentacion);
 app.use("/feedback/getRetroalimentacionAdmin", retroalimentacion);
 app.use("/feedback/getRetroalimentacionCliente", retroalimentacion);
-app.use("/feedback/crearRetroalimentacion", retroalimentacion);
 //-------Metricas
 app.use("/crearMetrica", metricas.createMetrica);
 app.use("/getUserMetricsEmpleado", metricas.getUserMetrics);
