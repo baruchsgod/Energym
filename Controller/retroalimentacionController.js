@@ -18,8 +18,8 @@ router.get("/getRetroalimentacionAdmin", async (req, res, next) => {
     });
 });
 
-router.get("/", async (req, res, next) => {
-    var userId = req.user._id;
+router.get("/getRetroalimentacionCliente", async (req, res, next) => {
+    var userId = req.query.userId;
     Customer.findOne({ _id: userId }, (err, user) => {
         if (err) {
             res.json({ success: false, message: err });
