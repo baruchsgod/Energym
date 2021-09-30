@@ -31,10 +31,12 @@ router.get("/getRetroalimentacionCliente", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
+    const newCastUserId = mongoose.Types.ObjectId(req.body.userId);
+    var correo = req.body.correo;
     //Esta funcion agrega un Mensaje a la coleccion
     var retroalimentacion = new Retroalimentacion({
-        "Cliente.Id": req.body.userId,
-        "Cliente.Correo": req.body.correo,
+        "Cliente.Id": newCastUserId,
+        "Cliente.Correo": correo,
         "Descripcion": req.body.descripcion,
         "Calificacion": req.body.calificacion
     });
@@ -51,7 +53,7 @@ router.post("/", async (req, res, next) => {
             "Descripcion": retroalimentacionStored.Descripcion,
             "Calificacion": retroalimentacionStored.Calificacion
         };
-        User.findByIdAndUpdate(req.user._id, { $push: { Retroalimentacion: retroalimentacionCliente } }, { upsert: true, setDefaultsOnInsert: true }, async (err, clientUpdated) => {
+        User.findByIdAndUpdate(newCastUserId, { $push: { Retroalimentacion: retroalimentacionCliente } }, { upsert: true, setDefaultsOnInsert: true }, async (err, clientUpdated) => {
             if (err) {
                 return res.status(200).send({ title: 'Hubo un error!', message: 'Error al guardar la retroalimentación en el cliente: ' + err, icon: 'error' });
             }
