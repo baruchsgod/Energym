@@ -30,7 +30,6 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-    return res.status(200).send({ title: 'Exito!', message: 'El Mensaje fue creado correctamente!', icon: 'success' });
     //Esta funcion agrega un Mensaje a la coleccion
     var retroalimentacion = new Retroalimentacion({
         "Cliente.Id": req.user._id,
