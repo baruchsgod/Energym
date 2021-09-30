@@ -14,7 +14,8 @@ router.get("/getRetroalimentacionAdmin", async (req, res, next) => {
         if (err) {
             return res.status(200).send({ title: 'Error!', message: 'Hubo un problema al cargar los datos: ' + err, icon: 'error' });
         }
-        if (data) return res.status(200).send(data);
+        if (data) console.log(data)
+        return res.status(200).send(data);
     });
 });
 
@@ -32,8 +33,8 @@ router.get("/getRetroalimentacionCliente", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
     //Esta funcion agrega un Mensaje a la coleccion
     var retroalimentacion = new Retroalimentacion({
-        "Cliente.Id": req.user._id,
-        "Cliente.Correo": req.user._id,
+        "Cliente.Id": req.body.userId,
+        "Cliente.Correo": req.body.correo,
         "Descripcion": req.body.descripcion,
         "Calificacion": req.body.calificacion
     });
