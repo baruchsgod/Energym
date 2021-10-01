@@ -5,6 +5,8 @@ const middleware = require("./middleware");
 const mongoose = require('./database');
 const cron = require("node-cron");
 const session = require('express-session');
+var cookieSession = require('cookie-session');
+var cookieParser = require('cookie-parser')
 const passport = require('passport');
 // const passportLocalMongoose = require('passport-local-mongoose');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -29,9 +31,14 @@ client.setConfig({
 
 app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
+app.use(express.cookieParser());
 app.use(bodyParser.json());
 app.use(express.json());
 app.set("trust proxy", 1);
+app.use(cookieSession({
+    name: 'session',
+    keys: ['key1', 'key2']
+  }))
 
 app.use(session({
     secret: "Anything123*",
@@ -399,7 +406,7 @@ app.post("/activar", (req, res, next) => {
     })(req, res, next);
 })
 app.get("/home", middleware.requireLogin, function (req, res, next) { res.redirect("/"); });
-app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+req._passport.session.user); console.log(req.user); res.send(req.user); });
+app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+req.session); console.log(req.user); res.send(req.user); });
 app.get("/isauth", (req, res) => { req.isAuthenticated() ? res.status(200).send(true) : res.status(200).send(false); })
 app.get("/logout", function (req, res) {
     req.logOut();
