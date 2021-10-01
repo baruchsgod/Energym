@@ -73,7 +73,7 @@ const controller = {
         });
     },
     getUserDiets: function (req, res) {
-        var email = req.user.email;
+        var email = req.query.correo;
         Diet.find({ "email": email }, (err, diets) => {
             if (err) {
                 res.json({ success: false, message: err });
@@ -124,7 +124,7 @@ const controller = {
     },
     getUserDetails: function (req, res) {
         var email = req.query.idUser;
-        Customer.find({ "email": email, "EstadoCuenta":"Activo" }, (err, client) => {
+        Customer.find({ "email": email, "EstadoCuenta": "Activo" }, (err, client) => {
             if (err) {
                 res.send([])
             } else {
