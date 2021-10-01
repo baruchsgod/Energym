@@ -5,7 +5,6 @@ const middleware = require("./middleware");
 const mongoose = require('./database');
 const cron = require("node-cron");
 const session = require('express-session');
-var cookieSession = require('cookie-session');
 var cookieParser = require('cookie-parser')
 const passport = require('passport');
 // const passportLocalMongoose = require('passport-local-mongoose');
@@ -35,15 +34,14 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.json());
 app.set("trust proxy", 1);
-app.use(cookieSession({
-    name: 'session',
-    keys: ['key1', 'key2']
-  }))
 
 app.use(session({
+    cookieName: 'session',
     secret: "Anything123*",
-    resave: false,
-    saveUninitialized:true
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000
+    // resave: false,
+    // saveUninitialized:true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
