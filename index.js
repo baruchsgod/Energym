@@ -32,10 +32,12 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(express.json());
 app.set("trust proxy", 1);
+const oneDay = 1000 * 60 * 60 * 24;
 app.use(session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false
+    secret: "Anything123*",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false
 
 }));
 app.use(passport.initialize());
