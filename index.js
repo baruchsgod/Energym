@@ -401,7 +401,7 @@ app.post("/activar", (req, res, next) => {
     })(req, res, next);
 })
 app.get("/home", middleware.requireLogin, function (req, res, next) { res.redirect("/"); });
-app.get("/user", (req, res) => { console.log(req.user); res.send(req.user); });
+app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log(req.session.passport.user); console.log(req.user); res.send(req.user); });
 app.get("/isauth", (req, res) => { req.isAuthenticated() ? res.status(200).send(true) : res.status(200).send(false); })
 app.get("/logout", function (req, res) {
     req.logOut();
