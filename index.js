@@ -38,10 +38,13 @@ app.set("trust proxy", 1);
 app.use(session({
     cookieName: 'session',
     secret: "Anything123*",
-    duration: 30 * 60 * 1000,
-    activeDuration: 5 * 60 * 1000
-    // resave: false,
-    // saveUninitialized:true
+    rolling: false,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+    sameSite: false, // i think this is default to false
+    maxAge: 60 * 60 * 1000
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -404,7 +407,7 @@ app.post("/activar", (req, res, next) => {
     })(req, res, next);
 })
 app.get("/home", middleware.requireLogin, function (req, res, next) { res.redirect("/"); });
-app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+req.session); console.log(req.user); res.send(req.user); });
+app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+req.session.cookie); console.log(req.user); res.send(req.user); });
 app.get("/isauth", (req, res) => { req.isAuthenticated() ? res.status(200).send(true) : res.status(200).send(false); })
 app.get("/logout", function (req, res) {
     req.logOut();
