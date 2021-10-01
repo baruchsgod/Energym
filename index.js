@@ -35,10 +35,10 @@ app.use(express.cookieParser());
 app.use(bodyParser.json());
 app.use(express.json());
 app.set("trust proxy", 1);
-app.use(cookieSession({
-    name: 'session',
-    keys: ['key1', 'key2']
-  }))
+// app.use(cookieSession({
+//     name: 'session',
+//     keys: ['key1', 'key2']
+//   }))
 
 app.use(session({
     secret: "Anything123*",
