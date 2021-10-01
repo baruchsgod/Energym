@@ -28,7 +28,7 @@ export default function ListFeedback() {
         let cuatro = 0;
         let cinco = 0;
         if (userFeedback.length === 0) {
-            fetch('/listRetroalimentacion')
+            fetch('https://energymproject.herokuapp.com/feedback/getRetroalimentacionAdmin')
                 .then(response => response.json())
                 .then(data => setUserFeedback(data));
         }
@@ -174,10 +174,10 @@ export default function ListFeedback() {
                                 </div>
                                 <hr />
                             </div>
-                            {totalPuntos > 0 ? <h5 className="para-color mb-5 ml-4">Promedio de valoración: {totalPuntos / totalItems} de 5 basado en {totalItems} {totalItems === 1 ? "opinión." : "opiniones."  }</h5>
-                            :
-                            <h5 className="para-color mb-5 ml-4">No existen actualmente valoraciones realizadas por los clientes...</h5>
-                            }                     
+                            {totalPuntos > 0 ? <h5 className="para-color mb-5 ml-4">Promedio de valoración: {totalPuntos / totalItems} de 5 basado en {totalItems} {totalItems === 1 ? "opinión." : "opiniones."}</h5>
+                                :
+                                <h5 className="para-color mb-5 ml-4">No existen actualmente valoraciones realizadas por los clientes...</h5>
+                            }
                         </div>
                     </div>
                     <div className="row ">

@@ -12,7 +12,7 @@ export default function ListMetrics() {
     const [graficaSelected, setgraficaSelected] = useState("");
     useEffect(() => {
         if (userMetrics.length === 0) {
-            fetch('/listUserMetrics')
+            fetch('https://energymproject.herokuapp.com/listUserMetrics')
                 .then(response => response.json())
                 .then(data => setUserMetrics(data));
         }

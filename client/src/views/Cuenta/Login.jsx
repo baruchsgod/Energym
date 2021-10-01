@@ -25,7 +25,7 @@ function Login() {
       username: emailRef.current.value,
       password: passwordRef.current.value
     };
-    
+
     Axios.post("https://energymproject.herokuapp.com/login", login)
       .then(response => {
         if (response.data.message != null) {
@@ -57,22 +57,23 @@ function Login() {
           localStorage.setItem("isAuth", true);
           localStorage.setItem("tipoCuenta", response.data.TipoCuenta);/////guardo el tipo de la cuenta para que pueda acceder a ciertos lugares
           localStorage.setItem("userName", response.data.fName + " " + response.data.lName);
-          localStorage.setItem("correo",response.data.email);
+          localStorage.setItem("correo", response.data.email);
+          localStorage.setItem("userId", response.data._id);
           if (response.data.TipoCuenta === 'Cliente') { window.location = "/" }
           else if (response.data.TipoCuenta === 'Empleado') { window.location = "/InicioEmpleado" }
           else if (response.data.TipoCuenta === 'Administrador') { window.location = "/InicioAdmin" }
         }
       })
       .then(error => {
-        
+
       });
   }
 
-const setGoogle = () => {
-  localStorage.setItem("isAuth", true);
-  localStorage.setItem("tipoCuenta", "Cliente");
-  window.open("https://energymproject.herokuapp.com/auth/google", "_self");
-}
+  const setGoogle = () => {
+    localStorage.setItem("isAuth", true);
+    localStorage.setItem("tipoCuenta", "Cliente");
+    window.open("https://energymproject.herokuapp.com/auth/google", "_self");
+  }
 
   return (<div>
     <section className="get-a-membership-area fade-in-card">

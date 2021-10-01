@@ -19,12 +19,12 @@ export default function TextEditor() {
         e.preventDefault();
         setTable([]);
         const user = userRef.current.value;
-        Axios.get("/userRoutine", {
+        Axios.get("https://energymproject.herokuapp.com/userRoutine", {
             params: { userData: user }
         })
             .then((res) => {
                 if (res.data.length > 0) {
-                    Axios.get("/userRoutine/getDetails", {
+                    Axios.get("https://energymproject.herokuapp.com/userRoutine/getDetails", {
                         params: { userData: user }
                     })
                         .then((respond) => {

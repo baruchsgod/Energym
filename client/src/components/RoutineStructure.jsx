@@ -27,7 +27,7 @@ export default function RoutineStructure(props) {
         })
         .then(async (value) => {
             if (value) {
-                Axios.post("/userRoutine/deleteOneRoutine", idRemove)
+                Axios.post("https://energymproject.herokuapp.com/userRoutine/deleteOneRoutine", idRemove)
                     .then(async (res) => {
                         if (res.data.length === 2) {
                             await swal("La rutina de "+type+" del dia "+day+" se ha borrado exitosamente!", {

@@ -54,7 +54,7 @@ export default function TextEditor() {
             .then((res) => {
                 if (res.data.length > 0) {
                     setData(res.data);
-                    Axios.get("/userRoutine/getDetails", {
+                    Axios.get("https://energymproject.herokuapp.com/userRoutine/getDetails", {
                         params: { userData: user }
                     })
                         .then((respond) => {

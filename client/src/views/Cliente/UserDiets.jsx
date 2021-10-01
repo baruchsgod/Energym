@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Axios from "axios";
 import { Button } from "react-bootstrap";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -13,10 +14,14 @@ import { useHistory } from "react-router-dom";
 export default function ListDiets() {
     const history = useHistory();
     const [userDiets, setUserDiets] = useState([]);
+    const [correo] = useState(localStorage.getItem('correo') || false);
     useEffect(() => {
-        fetch('/listUserDiets')
-            .then(response => response.json())
-            .then(data => setUserDiets(data));
+        if (correo) {
+            Axios.get('https://energymproject.herokuapp.com/listUserDiets', {
+                params: { correo: correo }
+            })
+                .then(response => setUserDiets(response.data));
+        }
     }, []);
     function verDetalle(detalleDieta, tipoDieta, e) {
         e.preventDefault();

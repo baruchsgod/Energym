@@ -32,13 +32,11 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(express.json());
 app.set("trust proxy", 1);
-const oneDay = 1000 * 60 * 60 * 24;
+
 app.use(session({
     secret: "Anything123*",
-    saveUninitialized:true,
-    cookie: { maxAge: oneDay },
-    resave: false
-
+    resave: false,
+    saveUninitialized:true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -401,7 +399,7 @@ app.post("/activar", (req, res, next) => {
     })(req, res, next);
 })
 app.get("/home", middleware.requireLogin, function (req, res, next) { res.redirect("/"); });
-app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+req.session); console.log(req.user); res.send(req.user); });
+app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+req._passport.session.user); console.log(req.user); res.send(req.user); });
 app.get("/isauth", (req, res) => { req.isAuthenticated() ? res.status(200).send(true) : res.status(200).send(false); })
 app.get("/logout", function (req, res) {
     req.logOut();

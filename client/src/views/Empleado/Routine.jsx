@@ -32,7 +32,7 @@ export default function Routine(props) {
         setError("");
         setMsg("");
         if (newRoutine) {
-            Axios.get("/userRoutine", {
+            Axios.get("https://energymproject.herokuapp.com/userRoutine", {
                 params: { userData: email }
             })
                 .then((res) => {
@@ -50,7 +50,7 @@ export default function Routine(props) {
                     }
                 })
         } else {
-            Axios.get("/userRoutine/getDetailsbyId", {
+            Axios.get("https://energymproject.herokuapp.com/userRoutine/getDetailsbyId", {
                 params: { userData: _id }
             })
                 .then((res) => {
@@ -64,8 +64,8 @@ export default function Routine(props) {
                         setName(res.data[0].nombre);
                         setLname(res.data[0].apellido);
                         setRoutine(res.data[0].Detalles);
-                        console.log(res.data[0].Detalles)
-                        console.log("este es el id pasado: " + _id);
+                        //console.log(res.data[0].Detalles)
+                        //console.log("este es el id pasado: " + _id);
                     } else {
                         setError("Error en el sistema, no se han encontrado ningun cliente, intente mas tarde!");
                     }

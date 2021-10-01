@@ -14,7 +14,7 @@ export default function ListRoutines() {
     const [userRoutines, setUserRoutines] = useState([]);
     useEffect(() => {
         if (userRoutines.length === 0) {
-            fetch('/listUserRoutines')
+            fetch('https://energymproject.herokuapp.com/listUserRoutines')
                 .then(response => response.json())
                 .then(data => setUserRoutines(data));
         }
@@ -42,7 +42,7 @@ export default function ListRoutines() {
             {
                 Tipo: "Rutina " + (index + 1).toString(),
                 Dia: moment(item.createdAt).format("DD/MM/YYYY"),
-                Detalle: <Link to={{pathname: "/Routine/Details", state:{_id: item._id, routines:item.Detalles, email:item.email, name:item.nombre, lname:item.apellido} }} style={{ textDecoration: 'none' }}><Button type="button" className="BotonesColor"><FontAwesomeIcon icon={faEye} /></Button></Link>,
+                Detalle: <Link to={{ pathname: "/Routine/Details", state: { _id: item._id, routines: item.Detalles, email: item.email, name: item.nombre, lname: item.apellido } }} style={{ textDecoration: 'none' }}><Button type="button" className="BotonesColor"><FontAwesomeIcon icon={faEye} /></Button></Link>,
             }))
     };
     return (
