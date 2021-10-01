@@ -31,14 +31,14 @@ client.setConfig({
 
 app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
-app.use(express.cookieParser());
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.json());
 app.set("trust proxy", 1);
-// app.use(cookieSession({
-//     name: 'session',
-//     keys: ['key1', 'key2']
-//   }))
+app.use(cookieSession({
+    name: 'session',
+    keys: ['key1', 'key2']
+  }))
 
 app.use(session({
     secret: "Anything123*",
