@@ -28,7 +28,7 @@ export default function Membership(props) {
         })
             .then(async (res) => {
                 if (res.data.length > 0) {
-                    Axios.get("https://energymproject.herokuapp.com/user")
+                    Axios.get("https://energymproject.herokuapp.com/user", {credentials: 'include'})
                     .then(async (resp) => {
                         if(resp.data){
                             Axios.get("https://energymproject.herokuapp.com/payment/reject", {
