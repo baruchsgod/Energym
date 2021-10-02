@@ -42,6 +42,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(function(req, res, next){
     res.locals.user = req.user || null
+    console.log("este es el res "+res.locals.user);
     next();
   })
 app.use(cors({ origin: "https://energym-project.herokuapp.com", credentials: true })); //testing CORS
@@ -58,8 +59,8 @@ passport.serializeUser(function (user, done) {
 });
 passport.deserializeUser(function (id, done) {
     User.findById(id, function (err, user) {
-        console.log("este es el deserialize "+user)
         done(err, user);
+        console.log("deserialize "+user);
     });
 });
 passport.use(new GoogleStrategy({
@@ -404,7 +405,7 @@ app.post("/activar", (req, res, next) => {
     })(req, res, next);
 })
 app.get("/home", middleware.requireLogin, function (req, res, next) { res.redirect("/"); });
-app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+req.session.cookie); console.log(req.user); res.send(req.user); });
+app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+req); console.log(req.user); res.send(req.user); });
 app.get("/isauth", (req, res) => { req.isAuthenticated() ? res.status(200).send(true) : res.status(200).send(false); })
 app.get("/logout", function (req, res) {
     req.logOut();
