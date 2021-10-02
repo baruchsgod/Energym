@@ -369,7 +369,7 @@ app.post("/login", (req, res, next) => {
         try {
             if (err) throw err;
             if (!user) res.send("No User Exists");
-            user.EstadoCuenta === "Inactivo" ? res.send("Su cuenta se encuentra INACTIVA!") : req.logIn(user, (err) => { if (!err) activeUser = req.user; res.send(req.user) });
+            user.EstadoCuenta === "Inactivo" ? res.send("Su cuenta se encuentra INACTIVA!") : req.logIn(user, (err) => { if (!err) activeUser = user; res.send(req.user) });
 
         } catch (err) {
             //Enviar el error capturado al log que se hizo en la base de datos
