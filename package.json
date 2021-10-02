@@ -29,6 +29,7 @@
     "bootstrap": "^5.0.1",
     "chalk": "^4.1.1",
     "concurrently": "^6.2.0",
+    "connect-mongo": "^4.6.0",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^9.0.2",

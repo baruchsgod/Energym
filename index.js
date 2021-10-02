@@ -5,6 +5,7 @@ const middleware = require("./middleware");
 const mongoose = require('./database');
 const cron = require("node-cron");
 const session = require('cookie-session');
+const MongoStore = require('connect-mongo')(session)
 const passport = require('passport');
 // const passportLocalMongoose = require('passport-local-mongoose');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -36,15 +37,12 @@ app.set("trust proxy", 1);
 app.use(session({
     secret: "Anything123*",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new MongoStore(options)
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(function(req, res, next){
-    res.locals.user = req.user || null
-    console.log("este es el res "+res.locals.user);
-    next();
-  })
+
 app.use(cors({ origin: "https://energym-project.herokuapp.com", credentials: true })); //testing CORS
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://energym-project.herokuapp.com');
@@ -63,6 +61,11 @@ passport.deserializeUser(function (id, done) {
         console.log("deserialize "+user);
     });
 });
+app.use(function(req, res, next){
+    res.locals.user = req.user || null
+    console.log("este es el res "+res.locals.user);
+    next();
+  })
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
@@ -365,7 +368,7 @@ app.post("/login", (req, res, next) => {
         try {
             if (err) throw err;
             if (!user) res.send("No User Exists");
-            user.EstadoCuenta === "Inactivo" ? res.send("Su cuenta se encuentra INACTIVA!") : req.logIn(user, (err) => { if (!err) console.log("este es el req.user "+req.user); res.send(req.user) });
+            user.EstadoCuenta === "Inactivo" ? res.send("Su cuenta se encuentra INACTIVA!") : req.logIn(user, (err) => { if (!err) console.log("este es el req.user "+req.user); res.locals.user = req.user; res.send(req.user) });
 
         } catch (err) {
             //Enviar el error capturado al log que se hizo en la base de datos
@@ -405,7 +408,7 @@ app.post("/activar", (req, res, next) => {
     })(req, res, next);
 })
 app.get("/home", middleware.requireLogin, function (req, res, next) { res.redirect("/"); });
-app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+req); console.log(req.user); res.send(req.user); });
+app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+res.locals.user); console.log(req.user); res.send(req.user); });
 app.get("/isauth", (req, res) => { req.isAuthenticated() ? res.status(200).send(true) : res.status(200).send(false); })
 app.get("/logout", function (req, res) {
     req.logOut();
