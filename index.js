@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const middleware = require("./middleware");
@@ -34,15 +34,9 @@ app.use(express.json());
 // app.set("trust proxy", 1);
 
 app.use(session({
-    cookieName: 'session',
     secret: "Anything123*",
-    rolling: false,
     resave: false,
-    saveUninitialized: false,
-    cookie: {
-    sameSite: false, // i think this is default to false
-    maxAge: 60 * 60 * 1000
-  }
+    saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -56,7 +50,7 @@ app.use(cors({ origin: "https://energym-project.herokuapp.com", credentials: tru
 // });
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
-    done(null, user._id);
+    done(null, user.id);
 });
 passport.deserializeUser(function (id, done) {
     User.findById(id, function (err, user) {
