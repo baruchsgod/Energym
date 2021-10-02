@@ -9,9 +9,9 @@ class Database {
   connect(){
     mongoose.connect('mongodb+srv://Maiky:Test123*@cluster0.tajvz.mongodb.net/Energym', {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true
+      useUnifiedTopology: true
+      // useFindAndModify: false,
+      // useCreateIndex: true
     })
     .then(() => {
       console.log("Succesfully connected to the database");
