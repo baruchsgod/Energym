@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const middleware = require("./middleware");
@@ -31,7 +31,7 @@ app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(express.json());
-// app.set("trust proxy", 1);
+app.set("trust proxy", 1);
 
 app.use(session({
     secret: "Anything123*",
@@ -40,20 +40,25 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function(req, res, next){
+    res.locals.user = req.user || null
+    next();
+  })
 app.use(cors({ origin: "https://energym-project.herokuapp.com", credentials: true })); //testing CORS
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', 'https://energym-project.herokuapp.com');
-//     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-//     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-//     next();
-// });
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://energym-project.herokuapp.com');
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+    next();
+});
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
 passport.deserializeUser(function (id, done) {
     User.findById(id, function (err, user) {
+        console.log("este es el deserialize "+user)
         done(err, user);
     });
 });
