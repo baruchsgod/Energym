@@ -37,7 +37,12 @@ app.set("trust proxy", 1);
 app.use(session({
     secret: "Anything123*",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie:{
+        sameSite:'none',
+        secure:true,
+        maxAge:1000*24*24*60*7
+    }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
