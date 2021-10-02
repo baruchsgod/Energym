@@ -58,9 +58,11 @@ app.use((req, res, next) => {
 });
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    console.log("serializado " + user._id)
+    done(null, user._id);
 });
 passport.deserializeUser(function (id, done) {
+    console.log("deserializado " + user._id)
     User.findById(id, function (err, user) {
         done(err, user);
         //console.log("deserialize " + user);
