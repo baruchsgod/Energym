@@ -5,14 +5,15 @@ const middleware = require("./middleware");
 const mongoose = require('./database');
 const cron = require("node-cron");
 const session = require('cookie-session');
-const MongoStore = require('connect-mongo')
 const passport = require('passport');
+const expressListRoutes = require('express-list-routes');
 // const passportLocalMongoose = require('passport-local-mongoose');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require(__dirname + "/Model/cliente.js");
 const ErrorController = require("./Controller/Errors");
 const cors = require("cors");
 const app = express();
+expressListRoutes(app);
 const FacebookStrategy = require("passport-facebook").Strategy;
 //TESTEANDO SCHEDULE JOB IN INDEX
 const Billing = require(__dirname + "/Model/facturacion.js");
@@ -37,8 +38,7 @@ app.set("trust proxy", 1);
 app.use(session({
     secret: "Anything123*",
     resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: 'mongodb+srv://Maiky:Test123*@cluster0.tajvz.mongodb.net/Energym' })
+    saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
