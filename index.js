@@ -5,7 +5,6 @@ const middleware = require("./middleware");
 const mongoose = require('./database');
 const cron = require("node-cron");
 const session = require('express-session');
-var cookieParser = require('cookie-parser')
 const passport = require('passport');
 // const passportLocalMongoose = require('passport-local-mongoose');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -30,10 +29,9 @@ client.setConfig({
 
 app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
-app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.json());
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 
 app.use(session({
     cookieName: 'session',
@@ -49,16 +47,16 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({ origin: "https://energym-project.herokuapp.com", credentials: true })); //testing CORS
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://energym-project.herokuapp.com');
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', 'https://energym-project.herokuapp.com');
+//     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+//     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+//     next();
+// });
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    done(null, user._id);
 });
 passport.deserializeUser(function (id, done) {
     User.findById(id, function (err, user) {
