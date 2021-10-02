@@ -27,6 +27,7 @@ client.setConfig({
     apiKey: "9c27e04f4b7262eec97a84525a56b576-us6",
     server: "us6",
 });
+const activeUser = {};
 
 app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
@@ -368,7 +369,7 @@ app.post("/login", (req, res, next) => {
         try {
             if (err) throw err;
             if (!user) res.send("No User Exists");
-            user.EstadoCuenta === "Inactivo" ? res.send("Su cuenta se encuentra INACTIVA!") : req.logIn(user, (err) => { if (!err) console.log("este es el req.user "+req.user); res.locals.user = req.user; res.send(req.user) });
+            user.EstadoCuenta === "Inactivo" ? res.send("Su cuenta se encuentra INACTIVA!") : req.logIn(user, (err) => { if (!err) activeUser = req.user; res.send(req.user) });
 
         } catch (err) {
             //Enviar el error capturado al log que se hizo en la base de datos
@@ -408,7 +409,7 @@ app.post("/activar", (req, res, next) => {
     })(req, res, next);
 })
 app.get("/home", middleware.requireLogin, function (req, res, next) { res.redirect("/"); });
-app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+req.locals); res.send(req.user); });
+app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+activeUser); res.send(activeUser); });
 app.get("/isauth", (req, res) => { req.isAuthenticated() ? res.status(200).send(true) : res.status(200).send(false); })
 app.get("/logout", function (req, res) {
     req.logOut();
