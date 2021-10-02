@@ -58,11 +58,9 @@ app.use((req, res, next) => {
 });
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
-    console.log("serializado " + user._id)
     done(null, user._id);
 });
 passport.deserializeUser(function (id, done) {
-    console.log("deserializado " + user._id)
     User.findById(id, function (err, user) {
         done(err, user);
         //console.log("deserialize " + user);
@@ -294,9 +292,9 @@ app.use("/userDataPost", userSettings.updateUserInfo);
 app.use("/userPasswordPost", userSettings.updateUserPassword);
 app.use("/listUserEvents", userSettings.getUserEvents);
 app.use("/listUserDiets", userSettings.getUserDiets);
-app.use("/listUserRoutines", userSettings.getUserRoutines);
+app.use("/listUserRoutines", userSettings.getUserRoutines, passport.authenticate('cross', { session: true }));
 app.use("/listUserDocuments", userSettings.getUserDocuments);
-app.use("/listUserMetrics", userSettings.getUserMetrics);
+app.use("/listUserMetrics", userSettings.getUserMetrics, passport.authenticate('cross', { session: true }));
 //-------Events
 app.use("/createEvent", events.createEvent);
 app.use("/editEvent", events.editEvent);
