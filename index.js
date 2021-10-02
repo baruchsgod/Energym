@@ -38,7 +38,7 @@ app.use(session({
     secret: "Anything123*",
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore(options)
+    store: MongoStore.create(options)
 }));
 app.use(passport.initialize());
 app.use(passport.session());
