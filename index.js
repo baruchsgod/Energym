@@ -38,7 +38,7 @@ app.use(session({
     secret: "Anything123*",
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create(options)
+    store: MongoStore.create({ mongoUrl: 'mongodb+srv://Maiky:Test123*@cluster0.tajvz.mongodb.net/Energym' })
 }));
 app.use(passport.initialize());
 app.use(passport.session());
