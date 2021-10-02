@@ -39,10 +39,10 @@ app.use(session({
     secret: "Anything123*",
     resave: false,
     saveUninitialized: false,
-    cookie:{
-        sameSite:'none',
-        secure:true,
-        maxAge:1000*24*24*60*7
+    cookie: {
+        sameSite: 'none',
+        secure: true,
+        maxAge: 1000 * 24 * 24 * 60 * 7
     }
 }));
 app.use(passport.initialize());
@@ -63,7 +63,7 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (id, done) {
     User.findById(id, function (err, user) {
         done(err, user);
-        console.log("deserialize "+user);
+        console.log("deserialize " + user);
     });
 });
 
@@ -369,8 +369,21 @@ app.post("/login", (req, res, next) => {
         try {
             if (err) throw err;
             if (!user) res.send("No User Exists");
-            user.EstadoCuenta === "Inactivo" ? res.send("Su cuenta se encuentra INACTIVA!") : req.logIn(user, (err) => { if (!err) activeUser = user; res.send(req.user) });
-
+            if (user.EstadoCuenta === "Inactivo") {
+                res.send("Su cuenta se encuentra INACTIVA!")
+            }
+            else {
+                req.logIn(user, (err) => {
+                    if (!err) {
+                        return res.status(201).json({
+                            user: user,
+                            session: req.session,
+                            "req.user": req.user
+                        });
+                    }
+                });
+            }
+            //user.EstadoCuenta === "Inactivo" ? res.send("Su cuenta se encuentra INACTIVA!") : req.logIn(user, (err) => { if (!err) activeUser = user; res.send(req.user) });
         } catch (err) {
             //Enviar el error capturado al log que se hizo en la base de datos
             //  console.log(err);
@@ -409,7 +422,7 @@ app.post("/activar", (req, res, next) => {
     })(req, res, next);
 })
 app.get("/home", middleware.requireLogin, function (req, res, next) { res.redirect("/"); });
-app.get("/user", (req, res) => { console.log("si esta funcionando el console"); console.log("esta es la sesion "+activeUser); res.send(activeUser); });
+app.get("/user", (req, res) => { console.log("si esta funcionando el console"); /*console.log("esta es la sesion "+activeUser); res.send(activeUser); */ });
 app.get("/isauth", (req, res) => { req.isAuthenticated() ? res.status(200).send(true) : res.status(200).send(false); })
 app.get("/logout", function (req, res) {
     req.logOut();
