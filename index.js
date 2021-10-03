@@ -29,12 +29,19 @@ client.setConfig({
 });
 const activeUser = {};
 
+
+app.use(express.cookieParser());
+app.use(express.bodyParser());
+app.use(express.cookieSession()); // Express cookie session middleware 
+app.use(passport.initialize());   // passport initialize middleware
+app.use(passport.session());      // passport session middleware 
+
+
 app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 // app.use(express.json());
 app.set("trust proxy", 1);
-
 app.use(session({
     secret: "Anything123*",
     resave: false,
@@ -45,9 +52,8 @@ app.use(session({
         maxAge: 1000 * 24 * 24 * 60 * 7
     }
 }));
-app.use(passport.initialize());
-app.use(passport.session());
-
+//app.use(passport.initialize());
+//app.use(passport.session());
 app.use(cors({ origin: "https://energym-project.herokuapp.com", credentials: true })); //testing CORS
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://energym-project.herokuapp.com');
@@ -63,7 +69,6 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (id, done) {
     User.findById(id, function (err, user) {
         done(err, user);
-        //console.log("deserialize " + user);
     });
 });
 
@@ -292,9 +297,9 @@ app.use("/userDataPost", userSettings.updateUserInfo);
 app.use("/userPasswordPost", userSettings.updateUserPassword);
 app.use("/listUserEvents", userSettings.getUserEvents);
 app.use("/listUserDiets", userSettings.getUserDiets);
-app.use("/listUserRoutines", userSettings.getUserRoutines, passport.authenticate('cross', { session: true }));
+app.use("/listUserRoutines", userSettings.getUserRoutines);
 app.use("/listUserDocuments", userSettings.getUserDocuments);
-app.use("/listUserMetrics", userSettings.getUserMetrics, passport.authenticate('cross', { session: true }));
+app.use("/listUserMetrics", userSettings.getUserMetrics);
 //-------Events
 app.use("/createEvent", events.createEvent);
 app.use("/editEvent", events.editEvent);
