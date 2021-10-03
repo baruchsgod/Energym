@@ -29,17 +29,12 @@ client.setConfig({
 });
 const activeUser = {};
 
-
-app.use(express.cookieParser());
-app.use(express.bodyParser());
-app.use(express.cookieSession()); // Express cookie session middleware 
 app.use(passport.initialize());   // passport initialize middleware
 app.use(passport.session());      // passport session middleware 
 
-
 app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 // app.use(express.json());
 app.set("trust proxy", 1);
 app.use(session({
