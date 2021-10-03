@@ -39,14 +39,14 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        sameSite: 'none',
+        sameSite: 'lax',
         secure: true,
         maxAge: 1000 * 24 * 24 * 60 * 7
     }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({ origin: "*", credentials: true })); //testing CORS
+app.use(cors({ origin: "https://energym-project.herokuapp.com", credentials: true })); //testing CORS
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://energym-project.herokuapp.com');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method, Set-Cookie');
