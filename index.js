@@ -56,10 +56,14 @@ app.use((req, res, next) => {
 });
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
+    console.log("user de serializer "+user)
     done(null, user._id);
 });
 passport.deserializeUser(function (id, done) {
+    console.log("user findid")
     User.findById(id, function (err, user) {
+        console.log("este es el user "+user)
+        console.log("este es el id "+ id)
         done(err, user);
     });
 });
@@ -419,7 +423,7 @@ app.post("/activar", (req, res, next) => {
     })(req, res, next);
 })
 app.get("/home", middleware.requireLogin, function (req, res, next) { res.redirect("/"); });
-app.get("/user", (req, res) => { console.log("si esta funcionando el console"); /*console.log("esta es la sesion "+activeUser); res.send(activeUser); */ });
+app.get("/user", (req, res) => { console.log("si esta funcionando el console"); /*console.log("esta es la sesion "+activeUser); */res.send(req.user); });
 app.get("/isauth", (req, res) => { req.isAuthenticated() ? res.status(200).send(true) : res.status(200).send(false); })
 app.get("/logout", function (req, res) {
     req.logOut();
