@@ -29,9 +29,6 @@ client.setConfig({
 });
 const activeUser = {};
 
-app.use(passport.initialize());   // passport initialize middleware
-app.use(passport.session());      // passport session middleware 
-
 app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
@@ -47,8 +44,8 @@ app.use(session({
         maxAge: 1000 * 24 * 24 * 60 * 7
     }
 }));
-//app.use(passport.initialize());
-//app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors({ origin: "https://energym-project.herokuapp.com", credentials: true })); //testing CORS
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://energym-project.herokuapp.com');
