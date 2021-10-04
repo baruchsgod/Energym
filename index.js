@@ -359,7 +359,7 @@ app.use("/report/close/billing", report.getDayReport);
 app.get("/", middleware.requireLogin, function (req, res, next) { res.status(200).render("home"); });
 app.get("/auth/google", cors(), passport.authenticate("google", { scope: ['profile', 'email'] }));
 app.get("/auth/facebook", passport.authenticate("facebook"));
-app.get("/auth/google/home", passport.authenticate("google", { failureRedirect: function (req, res) { res.redirect("/Login") } }), function (req, res) { res.redirect("/GoogleLogin") })
+app.get("/auth/google/home", passport.authenticate("google", { failureRedirect: function (req, res) { res.redirect("/Login") } }), function (req, res) { res.redirect("/") })
 app.get("/auth/facebook/home", passport.authenticate("facebook"), (req, res) => { res.redirect("/"); });
 
 app.post("/login", (req, res, next) => {
