@@ -73,7 +73,7 @@ const controller = {
         });
     },
     getUserDiets: function (req, res) {
-        var email = req.query.correo;
+        var email = req.user.email;
         Diet.find({ "email": email }, (err, diets) => {
             if (err) {
                 res.json({ success: false, message: err });

@@ -20,7 +20,7 @@ router.get("/getRetroalimentacionAdmin", async (req, res, next) => {
 });
 
 router.get("/getRetroalimentacionCliente", async (req, res, next) => {
-    var userId = req.query.userId;
+    var userId = req.user._id;
     Customer.findOne({ _id: userId }, (err, user) => {
         if (err) {
             res.json({ success: false, message: err });
@@ -31,8 +31,8 @@ router.get("/getRetroalimentacionCliente", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-    const newCastUserId = mongoose.Types.ObjectId(req.body.userId);
-    var correo = req.body.correo;
+    const newCastUserId = mongoose.Types.ObjectId(req.user._id);
+    var correo = req.user.email;
     //Esta funcion agrega un Mensaje a la coleccion
     var retroalimentacion = new Retroalimentacion({
         "Cliente.Id": newCastUserId,
