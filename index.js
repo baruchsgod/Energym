@@ -78,6 +78,7 @@ passport.use(new GoogleStrategy({
         User.findOrCreate({ googleId: profile.id }, function (err, user) {
             User.findByIdAndUpdate(user._id, { email: profile._json.email, googleId: profile.id, fName: profile._json.given_name, lName: profile._json.family_name, TipoCuenta: "Cliente" }, { upsert: true }, (err, userUpdated) => {
             });
+            console.log("this is the user of google "+user)
             return cb(err, user);
         });
     }
@@ -359,7 +360,7 @@ app.use("/report/close/billing", report.getDayReport);
 app.get("/", middleware.requireLogin, function (req, res, next) { res.status(200).render("home"); });
 app.get("/auth/google", cors(), passport.authenticate("google", { scope: ['profile', 'email'] }));
 app.get("/auth/facebook", passport.authenticate("facebook"));
-app.get("/auth/google/home", passport.authenticate("google", { failureRedirect: function (req, res) { res.redirect("/Login") } }), function (req, res) { res.redirect("https://energym-project.herokuapp.com/") })
+app.get("/auth/google/home", passport.authenticate("google", { failureRedirect: function (req, res) { res.redirect("/Login") } }), function (req, res) { res.redirect("https://energym-project.herokuapp.com") })
 app.get("/auth/facebook/home", passport.authenticate("facebook"), (req, res) => { res.redirect("/"); });
 
 app.post("/login", (req, res, next) => {
