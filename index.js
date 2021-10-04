@@ -27,7 +27,7 @@ client.setConfig({
     apiKey: "9c27e04f4b7262eec97a84525a56b576-us6",
     server: "us6",
 });
-const activeUser = {};
+
 
 app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
@@ -49,21 +49,18 @@ app.use(passport.session());
 app.use(cors({ origin: "https://energym-project.herokuapp.com", credentials: true })); //testing CORS
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://energym-project.herokuapp.com');
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method, Set-Cookie');
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
-    console.log("user de serializer " + user)
     done(null, user._id);
 });
 passport.deserializeUser(function (id, done) {
     console.log("user findid")
     User.findById(id, function (err, user) {
-        console.log("este es el user " + user)
-        console.log("este es el id " + id)
         done(err, user);
     });
 });
@@ -72,7 +69,7 @@ passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     // callbackURL: "http://localhost:3000/auth/google/home"
-    callbackURL: "https://energym-project.herokuapp.com//auth/google/home"
+    callbackURL: "/auth/google/home"
     // userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
 },
     function (accessToken, refreshToken, profile, cb) {
